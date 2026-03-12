@@ -1,0 +1,69 @@
+* {
+    font-family: 'Noto Sans Mono', 'Adwaita Mono', monospace;
+    font-size: 16px;
+    font-weight: bold;
+    min-height: 0;
+}
+
+@define-color base-black rgba(0, 0, 0, 0.9);
+@define-color slate-bg #1e1e1e;
+@define-color matrix-green #008F11;
+@define-color soft-mint #BBDBA6;
+@define-color button-green #BBDBA6;
+@define-color critical-red #E63946;
+
+window#waybar {
+    background: transparent;
+    color: white;
+}
+
+#workspaces {
+    background: @slate-bg;
+    margin: 4px 4px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: rgba(255, 255, 255, 0.4);
+    background: transparent;
+    border: none;
+}
+
+#workspaces button.active {
+    background: rgba(187, 219, 166, 0.15);
+    color: @button-green;
+    border-radius: 6px;
+}
+
+#clock, #battery, #cpu, #memory, #temperature, #language, #backlight, #network, 
+#pulseaudio, #tray, #custom-power, #custom-reboot, #custom-sleep, #custom-lock, 
+#custom-notification, #custom-weather, #power-profiles-daemon, #pulseaudio.microphone,
+#taskbar {
+    background: @slate-bg;
+    border-radius: 8px;
+    padding: 0 12px;
+    margin: 4px 4px;
+    color: @soft-mint;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#cpu:hover, #memory:hover, #language:hover, #pulseaudio:hover, #pulseaudio.microphone:hover, 
+#battery:hover, #clock:hover, #network:hover {
+    background: rgba(187, 219, 166, 0.1);
+    color: white;
+}
+
+#pulseaudio.muted, #pulseaudio.microphone.muted { color: @critical-red; }
+#custom-power { color: @critical-red; }
+#custom-reboot { color: #E9C46A; }
+#niri-language { color: @button-green; }
+
+tooltip {
+    background: #121212;
+    border: 1px solid @soft-mint;
+    border-radius: 8px;
+    padding: 10px;
+}
+tooltip label { color: white; }
