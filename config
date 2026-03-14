@@ -78,7 +78,9 @@
         "format-wifi": " {signalStrength}%",
         "format-ethernet": "󰈀 {ipaddr}",
         "format-disconnected": " ",
-        "tooltip-format-wifi": "{essid}\n {bandwidthDownBytes} 󰬬 {bandwidthUpBytes}"
+        "tooltip-format-wifi": "{essid}\n {bandwidthDownBytes} 󰬬 {bandwidthUpBytes}",
+        "on-click": "kitty --class nmtui-floating -e nmtui",
+        "on-click-right": "nm-connection-editor"
     },
 
     "custom/weather": {
