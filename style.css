@@ -1,69 +1,93 @@
-* {
-    font-family: 'Noto Sans Mono', 'Adwaita Mono', monospace;
-    font-size: 16px;
-    font-weight: bold;
-    min-height: 0;
-}
+/* --- Цветовая палитра Material 3 Expressive --- */
+@define-color bg-dark-gray #1E1E1E;        /* Темно-серый фон островка */
+@define-color fg-pistachio #93C572;        /* Фисташковый текст и иконки */
+@define-color hover-pistachio #A5D683;     /* Светло-фисташковый при наведении */
+@define-color module-bg #2C2C2C;           /* Фон кнопок внутри ящиков */
+@define-color alert-red #FF8A8A;           /* Цвет для разряженной батареи/отключений */
 
-@define-color base-black rgba(0, 0, 0, 0.9);
-@define-color slate-bg #111214;
-@define-color matrix-green #008F11;
-@define-color soft-mint #BBDBA6;
-@define-color button-green #BBDBA6;
-@define-color critical-red #E63946;
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "Symbols Nerd Font", "Roboto", sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
 
 window#waybar {
-    background: transparent;
-    color: white;
+    background-color: transparent;
 }
 
-#workspaces {
-    background: @slate-bg;
-    margin: 4px 4px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+/* Формируем сам остров */
+.modules-center {
+    background-color: @bg-dark-gray;
+    border-radius: 24px;
+    padding: 4px 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
 }
 
-#workspaces button {
-    padding: 0 8px;
-    color: rgba(255, 255, 255, 0.4);
-    background: transparent;
-    border: none;
-}
-
-#workspaces button.active {
-    background: rgba(187, 219, 166, 0.15);
-    color: @button-green;
-    border-radius: 6px;
-}
-
-#clock, #battery, #cpu, #memory, #temperature, #language, #backlight, #network, 
-#pulseaudio, #tray, #custom-power, #custom-reboot, #custom-sleep, #custom-lock, 
-#custom-notification, #custom-weather, #power-profiles-daemon, #pulseaudio.microphone,
-#taskbar {
-    background: @slate-bg;
-    border-radius: 8px;
+/* Общий стиль для всех кнопок и модулей */
+#clock, #custom-system_icon, #cpu, #temperature, #memory, #battery,
+#custom-media_icon, #pulseaudio, #network, #bluetooth, #custom-power, #taskbar button {
     padding: 0 12px;
-    margin: 4px 4px;
-    color: @soft-mint;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin: 2px;
+    border-radius: 18px;
+    background-color: @module-bg;
+    color: @fg-pistachio;
+    transition: all 0.2s ease;
 }
 
-#cpu:hover, #memory:hover, #language:hover, #pulseaudio:hover, #pulseaudio.microphone:hover, 
-#battery:hover, #clock:hover, #network:hover {
-    background: rgba(187, 219, 166, 0.1);
-    color: white;
+/* Подсветка при наведении */
+#custom-system_icon:hover, #custom-media_icon:hover, #custom-power:hover, #taskbar button:hover {
+    background-color: @hover-pistachio;
+    color: @bg-dark-gray;
 }
 
-#pulseaudio.muted, #pulseaudio.microphone.muted { color: @critical-red; }
-#custom-power { color: @critical-red; }
-#custom-reboot { color: #E9C46A; }
-#niri-language { color: @button-green; }
-
-tooltip {
-    background: #121212;
-    border: 1px solid @soft-mint;
-    border-radius: 8px;
-    padding: 10px;
+/* Активное окно в Taskbar */
+#taskbar button.active {
+    background-color: @fg-pistachio;
+    color: @bg-dark-gray;
 }
-tooltip label { color: white; }
+
+/* Кнопка питания выделяется чуть сильнее */
+#custom-power {
+    padding: 0 14px;
+    background-color: transparent;
+}
+#custom-power:hover {
+    background-color: @alert-red;
+    color: @bg-dark-gray;
+}
+
+/* Предупреждения (например, садится батарея) */
+#battery.warning, #battery.critical {
+    color: @alert-red;
+}
+
+/* Убираем фон у отдельных кнопок питания, чтобы они смотрелись как единый блок */
+#custom-power, #custom-reboot, #custom-sleep, #custom-logout {
+    padding: 0 12px;
+    margin: 2px;
+    border-radius: 18px;
+    background-color: transparent;
+    color: @fg-pistachio;
+    transition: all 0.2s ease;
+}
+
+/* Красная подсветка для выключения при наведении */
+#custom-power:hover {
+    background-color: @alert-red;
+    color: @bg-dark-gray;
+}
+
+/* Фисташковая подсветка для остальных действий при наведении */
+#custom-reboot:hover, #custom-sleep:hover, #custom-logout:hover {
+    background-color: @hover-pistachio;
+    color: @bg-dark-gray;
+}
+
+/* Делаем ящик питания чуть темнее, чтобы он выделялся */
+.modules-center > widget > box {
+    background-color: @module-bg;
+    border-radius: 20px;
+    margin: 0 4px;
+}

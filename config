@@ -1,48 +1,108 @@
 {
     "layer": "top",
     "position": "top",
-    "margin-top": 10,
-    "margin-bottom": 0,
+    "margin-top": 8,
     "height": 40,
-    // Убираем left и right margin, чтобы панель сжалась по центру
+    "spacing": 6,
+
+    // Все элементы лежат в центре для сохранения вида "Острова"
     "modules-center": [
-        "group/hardware",
-        "clock"
+        "wlr/taskbar",     // Слева: Открытый софт
+        "group/hardware",  // Слева: Данные железа
+        "clock",           // По центру: День, число, месяц, год
+        "network",         // Справа: Wi-Fi
+        "bluetooth",       // Справа: Bluetooth
+        "pulseaudio",      // Справа: Звук
+        "group/power"      // Справа: Кнопка выключения с выезжающим меню
     ],
 
-    // --- Настройка группы "Железо" (Скрытая по умолчанию) ---
+    // --- ЛЕВАЯ ЧАСТЬ ---
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 18,
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "ignore-list": ["waybar"],
+        "tooltip-format": "{title}"
+    },
     "group/hardware": {
         "orientation": "horizontal",
-        "modules": [
-            "custom/system_icon", // То, что видно всегда
-            "cpu",                // Скрыто
-            "memory",             // Скрыто
-            "temperature"         // Скрыто
-        ],
-        "drawer": {
-            "transition-duration": 300,
-            "children-class": "hw-stats",
-            "transition-left-to-right": false
-        }
+        "modules": ["cpu", "memory", "temperature", "battery"]
+    },
+    "cpu": { "format": " {usage}%", "tooltip": false },
+    "memory": { "format": " {}%", "tooltip": false },
+    "temperature": { "format": " {temperatureC}°C", "tooltip": false },
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-icons": ["", "", "", "", ""]
     },
 
-    // --- Сами модули ---
-    "custom/system_icon": {
-        "format": "", // Иконка чипа из Nerd Fonts
-        "tooltip": false
-    },
-    "cpu": {
-        "format": "{usage}% ",
-        "tooltip": false
-    },
-    "memory": {
-        "format": "{}% "
-    },
-    "temperature": {
-        "format": "{temperatureC}°C "
-    },
+    // --- ЦЕНТР ---
     "clock": {
-        "format": "{:%H:%M - %d.%m}",
-        "tooltip-format": "<tt><small>{calendar}</small></tt>"
+        // Формат: День недели, день месяц год
+        "format": "{:%A, %d %B %Y}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        // Укажите вашу локаль, чтобы дата была на русском (если система на английском)
+        "locale": "ru_RU.UTF-8" 
+    },
+
+    // --- ПРАВАЯ ЧАСТЬ ---
+    "network": {
+        "format-wifi": "",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "⚠",
+        "on-click": "swaync-client -t -sw",
+        "tooltip-format": "{essid} ({signalStrength}%)"
+    },
+    "bluetooth": {
+        "format": "",
+        "format-disabled": "󰂲",
+        "format-connected": "󰂱",
+        "on-click": "swaync-client -t -sw",
+        "tooltip-format": "{controller_alias}"
+    },
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-muted": "",
+        "format-icons": { "default": ["", "", ""] },
+        "on-click": "swaync-client -t -sw", // Открывает полный микшер с выбором устройств
+        "tooltip-format": "Громкость: {volume}%\nКликните для настройки входов/выходов"
+    },
+
+    // --- КНОПКА ПИТАНИЯ (С ВЫДВИЖНЫМ МЕНЮ) ---
+    "group/power": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 300,
+            "transition-left-to-right": false // Выдвигается влево от кнопки выключения
+        },
+        "modules": [
+            "custom/power",   // То, что видно всегда
+            "custom/reboot",  // Скрыто (Перезагрузка)
+            "custom/sleep",   // Скрыто (Сон)
+            "custom/logout"   // Скрыто (Выход)
+        ]
+    },
+    "custom/power": {
+        "format": "",
+        "on-click": "systemctl poweroff",
+        "tooltip-format": "Выключить ПК"
+    },
+    "custom/reboot": {
+        "format": "󰜉",
+        "on-click": "systemctl reboot",
+        "tooltip-format": "Перезагрузить"
+    },
+    "custom/sleep": {
+        "format": "󰒲",
+        "on-click": "systemctl suspend",
+        "tooltip-format": "Спящий режим"
+    },
+    "custom/logout": {
+        "format": "󰍃",
+        "on-click": "niri msg action quit", // Специфичная команда для выхода из niri
+        "tooltip-format": "Выйти из системы"
     }
 }
