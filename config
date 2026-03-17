@@ -1,183 +1,48 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 34,
-    "spacing": 4,
-    "output": "eDP-1",
-
-    "modules-left": [
-        "niri/workspaces",
-        "wlr/taskbar"
-    ],
+    "margin-top": 10,
+    "margin-bottom": 0,
+    "height": 40,
+    // Убираем left и right margin, чтобы панель сжалась по центру
     "modules-center": [
+        "group/hardware",
         "clock"
     ],
-    "modules-right": [
-        "tray",
-        "custom/notification",
-        "cpu",
-        "memory",
-        "temperature",
-        "niri/language",
-        "custom/weather",
-        "network",
-        "group/group-audio",
-        "group/group-battery",
-        "group/group-logout"
-    ],
 
-    "niri/workspaces": {
-        "format": "{index}",
-        "on-click": "activate"
-    },
-
-    "wlr/taskbar": {
-        "format": "{icon}",
-        "icon-size": 18,
-        "spacing": 3,
-        "on-click-middle": "close",
-        "tooltip-format": "{title}",
-        "on-click": "activate"
-    },
-    
-    "clock": {
-        "format": " {:%H:%M  󰃭 %d.%m.%Y}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "calendar": {
-            "mode": "month",
-            "on-scroll": 1,
-            "format": {
-                "months": "<span color='#bbdba6'><b>{}</b></span>",
-                "days": "<span color='#e0e0e0'><b>{}</b></span>",
-                "today": "<span color='#008f11'><b><u>{}</u></b></span>"
-            }
-        }
-    },
-
-    "cpu": {
-        "format": " {usage}%",
-        "interval": 2
-    },
-
-    "memory": {
-        "format": " {used:0.1f}G",
-        "interval": 5
-    },
-
-    "temperature": {
-        "critical-threshold": 80,
-        "format": " {temperatureC}°C"
-    },
-
-    "niri/language": {
-        "format": " {short}",
-        "on-click": "niri msg action switch-layout next"
-    },
-
-    "network": {
-        "format-wifi": " {signalStrength}%",
-        "format-ethernet": "󰈀 {ipaddr}",
-        "format-disconnected": " ",
-        "tooltip-format-wifi": "{essid}\n {bandwidthDownBytes} 󰬬 {bandwidthUpBytes}",
-        "on-click": "kitty --class nmtui-floating -e nmtui",
-        "on-click-right": "nm-connection-editor"
-    },
-
-    "custom/weather": {
-        "exec": "~/.config/waybar/scripts/get_weather.sh",
-        "return-type": "json",
-        "format": "{}",
-        "tooltip": true,
-        "interval": 1800
-    },
-
-    "custom/notification": {
-        "tooltip": false,
-        "format": "{icon}",
-        "format-icons": {
-            "notification": "<sup></sup>",
-            "none": "",
-            "dnd-notification": "<sup></sup>",
-            "dnd-none": ""
-        },
-        "return-type": "json",
-        "exec": "swaync-client -swb",
-        "on-click": "swaync-client -t -sw",
-        "escape": true
-    },
-
-    "group/group-audio": {
+    // --- Настройка группы "Железо" (Скрытая по умолчанию) ---
+    "group/hardware": {
         "orientation": "horizontal",
         "modules": [
-            "pulseaudio",
-            "pulseaudio#microphone"
+            "custom/system_icon", // То, что видно всегда
+            "cpu",                // Скрыто
+            "memory",             // Скрыто
+            "temperature"         // Скрыто
         ],
         "drawer": {
-            "transition-duration": 500,
+            "transition-duration": 300,
+            "children-class": "hw-stats",
             "transition-left-to-right": false
         }
     },
 
-    "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-muted": "",
-        "format-icons": {
-            "default": ["", ""]
-        },
-        "on-click": "pwvucontrol", 
-        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
-        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
-        "tooltip-format": "{desc}: {volume}%"
+    // --- Сами модули ---
+    "custom/system_icon": {
+        "format": "", // Иконка чипа из Nerd Fonts
+        "tooltip": false
     },
-
-    "pulseaudio#microphone": {
-        "format": "{format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": "",
-        "on-click": "pwvucontrol", 
-        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
-        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
-        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-",
-        "tooltip-format": "{source_desc}: {volume}%"
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false
     },
-
-    "group/group-battery": {
-        "orientation": "horizontal",
-        "modules": ["battery", "power-profiles-daemon"],
-        "drawer": {
-            "transition-duration": 500,
-            "transition-left-to-right": false
-        }
+    "memory": {
+        "format": "{}% "
     },
-
-    "group/group-logout": {
-        "orientation": "horizontal",
-        "modules": ["custom/power", "custom/lock", "custom/reboot", "custom/sleep"],
-        "drawer": {
-            "transition-duration": 500,
-            "transition-left-to-right": false
-        }
+    "temperature": {
+        "format": "{temperatureC}°C "
     },
-
-    "battery": {
-        "states": { "warning": 20, "critical": 10 },
-        "format": "{icon} {capacity}%",
-        "format-icons": ["󱊣", "󱊢", "󱊡", "󰂃"]
-    },
-
-    "power-profiles-daemon": {
-        "format": "{icon}",
-        "format-icons": {
-            "default": "",
-            "performance": "",
-            "balanced": "",
-            "power-saver": ""
-        }
-    },
-
-    "custom/power": { "format": "", "on-click": "systemctl poweroff" },
-    "custom/reboot": { "format": "", "on-click": "systemctl reboot" },
-    "custom/lock": { "format": "󰈆", "on-click": "niri msg action quit" },
-    "custom/sleep": { "format": "", "on-click": "systemctl suspend" }
+    "clock": {
+        "format": "{:%H:%M - %d.%m}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>"
+    }
 }
