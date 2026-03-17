@@ -5,18 +5,30 @@
     "height": 40,
     "spacing": 6,
 
-    // Все элементы лежат в центре для сохранения вида "Острова"
     "modules-center": [
-        "wlr/taskbar",     // Слева: Открытый софт
-        "group/hardware",  // Слева: Данные железа
-        "clock",           // По центру: День, число, месяц, год
-        "network",         // Справа: Wi-Fi
-        "bluetooth",       // Справа: Bluetooth
-        "pulseaudio",      // Справа: Звук
-        "group/power"      // Справа: Кнопка выключения с выезжающим меню
+        "group/taskbar_drawer", // Слева: Выезжающий ящик с программами
+        "group/hardware",       // Слева: Данные железа
+        "clock",                // По центру: Время, день, число, месяц, год
+        "custom/settings",      // Справа: Единая кнопка настроек
+        "group/power"           // Справа: Кнопка выключения с выезжающим меню
     ],
 
     // --- ЛЕВАЯ ЧАСТЬ ---
+    "group/taskbar_drawer": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 300,
+            "transition-left-to-right": true // Выдвигается вправо от иконки
+        },
+        "modules": [
+            "custom/apps_icon", // То, что видно всегда (триггер)
+            "wlr/taskbar"       // Скрыто (Сами программы)
+        ]
+    },
+    "custom/apps_icon": {
+        "format": "󰣆", // Иконка-триггер (можно поменять на любую из Nerd Fonts)
+        "tooltip-format": "Открытые программы"
+    },
     "wlr/taskbar": {
         "format": "{icon}",
         "icon-size": 18,
@@ -41,48 +53,31 @@
 
     // --- ЦЕНТР ---
     "clock": {
-        // Формат: День недели, день месяц год
-        "format": "{:%A, %d %B %Y}",
+        // Добавлено время (%H:%M) перед датой
+        "format": "{:%H:%M • %A, %d %B %Y}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
-        // Укажите вашу локаль, чтобы дата была на русском (если система на английском)
         "locale": "ru_RU.UTF-8" 
     },
 
     // --- ПРАВАЯ ЧАСТЬ ---
-    "network": {
-        "format-wifi": "",
-        "format-ethernet": "󰈀",
-        "format-disconnected": "⚠",
+    "custom/settings": {
+        "format": "",
         "on-click": "swaync-client -t -sw",
-        "tooltip-format": "{essid} ({signalStrength}%)"
-    },
-    "bluetooth": {
-        "format": "",
-        "format-disabled": "󰂲",
-        "format-connected": "󰂱",
-        "on-click": "swaync-client -t -sw",
-        "tooltip-format": "{controller_alias}"
-    },
-    "pulseaudio": {
-        "format": "{icon}",
-        "format-muted": "",
-        "format-icons": { "default": ["", "", ""] },
-        "on-click": "swaync-client -t -sw", // Открывает полный микшер с выбором устройств
-        "tooltip-format": "Громкость: {volume}%\nКликните для настройки входов/выходов"
+        "tooltip": false
     },
 
-    // --- КНОПКА ПИТАНИЯ (С ВЫДВИЖНЫМ МЕНЮ) ---
+    // --- КНОПКА ПИТАНИЯ ---
     "group/power": {
         "orientation": "horizontal",
         "drawer": {
             "transition-duration": 300,
-            "transition-left-to-right": false // Выдвигается влево от кнопки выключения
+            "transition-left-to-right": false 
         },
         "modules": [
-            "custom/power",   // То, что видно всегда
-            "custom/reboot",  // Скрыто (Перезагрузка)
-            "custom/sleep",   // Скрыто (Сон)
-            "custom/logout"   // Скрыто (Выход)
+            "custom/power",   
+            "custom/reboot",  
+            "custom/sleep",   
+            "custom/logout"   
         ]
     },
     "custom/power": {
@@ -102,7 +97,7 @@
     },
     "custom/logout": {
         "format": "󰍃",
-        "on-click": "niri msg action quit", // Специфичная команда для выхода из niri
+        "on-click": "niri msg action quit", 
         "tooltip-format": "Выйти из системы"
     }
 }

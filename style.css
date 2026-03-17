@@ -1,8 +1,8 @@
 /* --- Цветовая палитра Material 3 Expressive --- */
-@define-color bg-dark-gray #1E1E1E;        /* Темно-серый фон островка */
-@define-color fg-pistachio #93C572;        /* Фисташковый текст и иконки */
+@define-color bg-dark-gray #111214;      /* Темно-серый фон островка */
+@define-color fg-pistachio #BBDBA6;        /* Фисташковый текст и иконки */
 @define-color hover-pistachio #A5D683;     /* Светло-фисташковый при наведении */
-@define-color module-bg #2C2C2C;           /* Фон кнопок внутри ящиков */
+@define-color module-bg #1E1E1E;           /* Фон кнопок внутри ящиков */
 @define-color alert-red #FF8A8A;           /* Цвет для разряженной батареи/отключений */
 
 * {
@@ -25,9 +25,9 @@ window#waybar {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
 }
 
-/* Общий стиль для всех кнопок и модулей */
+/* Общий стиль для всех кнопок и модулей, включая новую иконку программ */
 #clock, #custom-system_icon, #cpu, #temperature, #memory, #battery,
-#custom-media_icon, #pulseaudio, #network, #bluetooth, #custom-power, #taskbar button {
+#custom-media_icon, #custom-settings, #custom-power, #taskbar button, #custom-apps_icon {
     padding: 0 12px;
     margin: 2px;
     border-radius: 18px;
@@ -37,7 +37,7 @@ window#waybar {
 }
 
 /* Подсветка при наведении */
-#custom-system_icon:hover, #custom-media_icon:hover, #custom-power:hover, #taskbar button:hover {
+#custom-system_icon:hover, #custom-media_icon:hover, #custom-settings:hover, #taskbar button:hover, #custom-apps_icon:hover {
     background-color: @hover-pistachio;
     color: @bg-dark-gray;
 }
@@ -85,7 +85,7 @@ window#waybar {
     color: @bg-dark-gray;
 }
 
-/* Делаем ящик питания чуть темнее, чтобы он выделялся */
+/* Делаем ящики чуть темнее, чтобы они выделялись */
 .modules-center > widget > box {
     background-color: @module-bg;
     border-radius: 20px;
