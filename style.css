@@ -1,9 +1,10 @@
 /* --- Цветовая палитра Material 3 Expressive --- */
 @define-color bg-dark-gray #111214;      /* Темно-серый фон островка */
-@define-color fg-pistachio #BBDBA6;        /* Фисташковый текст и иконки */
-@define-color hover-pistachio #A5D683;     /* Светло-фисташковый при наведении */
-@define-color module-bg #1E1E1E;           /* Фон кнопок внутри ящиков */
-@define-color alert-red #FF8A8A;           /* Цвет для разряженной батареи/отключений */
+@define-color fg-pistachio #BBDBA6;      /* Фисташковый текст и иконки */
+@define-color hover-pistachio #A5D683;   /* Тот самый цвет при наведении */
+@define-color module-bg #1E1E1E;         /* Фон кнопок внутри ящиков */
+@define-color alert-red #FF8A8A;         /* Цвет для разряженной батареи */
+@define-color record-orange #FFA348;     /* Оранжевый для записи экрана */
 
 * {
     border: none;
@@ -25,69 +26,80 @@ window#waybar {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
 }
 
-/* Общий стиль для всех кнопок и модулей, включая новую иконку программ */
-#clock, #custom-system_icon, #cpu, #temperature, #memory, #battery,
-#custom-media_icon, #custom-settings, #custom-power, #taskbar button, #custom-apps_icon {
+/* Общий стиль для всех кнопок и модулей */
+#clock, #cpu, #temperature, #memory, #battery,
+#custom-settings, #custom-power, #taskbar button, #custom-apps_icon {
     padding: 0 12px;
     margin: 2px;
     border-radius: 18px;
     background-color: @module-bg;
     color: @fg-pistachio;
-    transition: all 0.2s ease;
+    /* Плавный переход цвета */
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Подсветка при наведении */
-#custom-system_icon:hover, #custom-media_icon:hover, #custom-settings:hover, #taskbar button:hover, #custom-apps_icon:hover {
-    background-color: @hover-pistachio;
+/* --- ПОДСВЕТКА ПРИ НАВЕДЕНИИ (#A5D683) --- */
+/* Все кликабельные элементы становятся фисташковыми */
+#custom-settings:hover, 
+#taskbar button:hover, 
+#custom-apps_icon:hover,
+#custom-power:hover,
+#custom-reboot:hover, 
+#custom-sleep:hover, 
+#custom-logout:hover {
+    background-color: @hover-pistachio; 
     color: @bg-dark-gray;
 }
 
-/* Активное окно в Taskbar */
+/* Активному окну в Taskbar задаем цвет текста и фона, чтобы оно выделялось */
 #taskbar button.active {
     background-color: @fg-pistachio;
     color: @bg-dark-gray;
 }
 
-/* Кнопка питания выделяется чуть сильнее */
-#custom-power {
-    padding: 0 14px;
-    background-color: transparent;
-}
-#custom-power:hover {
-    background-color: @alert-red;
-    color: @bg-dark-gray;
-}
-
-/* Предупреждения (например, садится батарея) */
+/* Предупреждения (садится батарея) */
 #battery.warning, #battery.critical {
     color: @alert-red;
 }
 
-/* Убираем фон у отдельных кнопок питания, чтобы они смотрелись как единый блок */
-#custom-power, #custom-reboot, #custom-sleep, #custom-logout {
+/* Убираем дефолтный фон у скрытых кнопок меню питания */
+#custom-reboot, #custom-sleep, #custom-logout {
     padding: 0 12px;
     margin: 2px;
     border-radius: 18px;
     background-color: transparent;
     color: @fg-pistachio;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Красная подсветка для выключения при наведении */
-#custom-power:hover {
-    background-color: @alert-red;
-    color: @bg-dark-gray;
-}
-
-/* Фисташковая подсветка для остальных действий при наведении */
-#custom-reboot:hover, #custom-sleep:hover, #custom-logout:hover {
-    background-color: @hover-pistachio;
-    color: @bg-dark-gray;
-}
-
-/* Делаем ящики чуть темнее, чтобы они выделялись */
+/* Делаем ящики (выезжающие меню) чуть темнее, чтобы они выделялись */
 .modules-center > widget > box {
     background-color: @module-bg;
     border-radius: 20px;
     margin: 0 4px;
+}
+
+/* --- ИНДИКАТОРЫ ПРИВАТНОСТИ (МИКРОФОН / ЭКРАН) --- */
+#privacy {
+    padding: 0;
+    margin: 0 0 0 4px; /* Небольшой отступ слева от кнопки питания */
+    background-color: transparent;
+}
+
+#privacy-item {
+    padding: 0 6px;
+    margin: 2px;
+    border-radius: 18px;
+    background-color: @module-bg;
+    transition: all 0.2s ease;
+}
+
+/* Зеленый цвет для работающего микрофона */
+#privacy-item.audio-in {
+    color: @hover-pistachio;
+}
+
+/* Оранжевый цвет для записи экрана */
+#privacy-item.screenshare {
+    color: @record-orange;
 }

@@ -6,11 +6,12 @@
     "spacing": 6,
 
     "modules-center": [
-        "group/taskbar_drawer", // Слева: Выезжающий ящик с программами
-        "group/hardware",       // Слева: Данные железа
-        "clock",                // По центру: Время, день, число, месяц, год
-        "custom/settings",      // Справа: Единая кнопка настроек
-        "group/power"           // Справа: Кнопка выключения с выезжающим меню
+        "group/taskbar_drawer", 
+        "group/hardware",       
+        "clock",                
+        "custom/settings",      
+        "group/power",
+        "privacy"               
     ],
 
     // --- ЛЕВАЯ ЧАСТЬ ---
@@ -18,15 +19,15 @@
         "orientation": "horizontal",
         "drawer": {
             "transition-duration": 300,
-            "transition-left-to-right": true // Выдвигается вправо от иконки
+            "transition-left-to-right": true
         },
         "modules": [
-            "custom/apps_icon", // То, что видно всегда (триггер)
-            "wlr/taskbar"       // Скрыто (Сами программы)
+            "custom/apps_icon", 
+            "wlr/taskbar"       
         ]
     },
     "custom/apps_icon": {
-        "format": "󰣆", // Иконка-триггер (можно поменять на любую из Nerd Fonts)
+        "format": "󰣆", 
         "tooltip-format": "Открытые программы"
     },
     "wlr/taskbar": {
@@ -53,7 +54,6 @@
 
     // --- ЦЕНТР ---
     "clock": {
-        // Добавлено время (%H:%M) перед датой
         "format": "{:%H:%M • %A, %d %B %Y}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "locale": "ru_RU.UTF-8" 
@@ -99,5 +99,24 @@
         "format": "󰍃",
         "on-click": "niri msg action quit", 
         "tooltip-format": "Выйти из системы"
+    },
+
+    // --- ИНДИКАТОРЫ ПРИВАТНОСТИ (МИКРОФОН И ЭКРАН) ---
+    "privacy": {
+        "icon-spacing": 8,
+        "icon-size": 14,
+        "transition-duration": 250,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            }
+        ]
     }
 }
