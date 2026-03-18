@@ -1,10 +1,9 @@
-/* --- Цветовая палитра Material 3 Expressive --- */
-@define-color bg-dark-gray #111214;      /* Темно-серый фон островка */
-@define-color fg-pistachio #BBDBA6;      /* Фисташковый текст и иконки */
-@define-color hover-pistachio #A5D683;   /* Тот самый цвет при наведении */
-@define-color module-bg #1E1E1E;         /* Фон кнопок внутри ящиков */
-@define-color alert-red #FF8A8A;         /* Цвет для разряженной батареи */
-@define-color record-orange #FFA348;     /* Оранжевый для записи экрана */
+/* --- Цветовая палитра --- */
+@define-color bg-dark-gray #111214;
+@define-color fg-pistachio #BBDBA6;
+@define-color hover-pistachio #A5D683;
+@define-color module-bg #1E1E1E;
+@define-color alert-red #FF8A8A;
 
 * {
     border: none;
@@ -18,88 +17,81 @@ window#waybar {
     background-color: transparent;
 }
 
-/* Формируем сам остров */
 .modules-center {
     background-color: @bg-dark-gray;
     border-radius: 24px;
-    padding: 4px 1px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
+    padding: 2px 4px;
 }
 
-/* Общий стиль для всех кнопок и модулей */
-#clock, #cpu, #temperature, #memory, #battery,
-#custom-settings, #custom-power, #taskbar button, #custom-apps_icon {
+/* Общий стиль всех кнопок */
+#clock, #cpu, #temperature, #memory, #battery, #tray,
+#custom-settings, #custom-power, #taskbar button, 
+#custom-apps_icon, #custom-tray_icon,
+#custom-pp-perf, #custom-pp-balanced, #custom-pp-saver {
     padding: 0 12px;
-    margin: 2px;
-    border-radius: 18px;
+    margin: 4px 2px;
+    border-radius: 18px; /* Скругление выделения */
     background-color: @module-bg;
     color: @fg-pistachio;
-    /* Плавный переход цвета */
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-/* --- ПОДСВЕТКА ПРИ НАВЕДЕНИИ (#A5D683) --- */
-/* Все кликабельные элементы становятся фисташковыми */
+/* --- ПОДСВЕТКА ТЕКУЩЕГО РЕЖИМА ПИТАНИЯ --- */
+#custom-pp-perf.active, 
+#custom-pp-balanced.active, 
+#custom-pp-saver.active {
+    background-color: @fg-pistachio;
+    color: @bg-dark-gray;
+}
+
+/* Стили для неактивных иконок в ящике (без фона, пока не наведешь) */
+#custom-pp-perf, #custom-pp-balanced, #custom-pp-saver {
+    background-color: transparent;
+}
+
+/* --- НАВЕДЕНИЕ (Скругленное выделение) --- */
+#custom-pp-perf:hover, 
+#custom-pp-balanced:hover, 
+#custom-pp-saver:hover,
+#battery:hover,
 #custom-settings:hover, 
 #taskbar button:hover, 
 #custom-apps_icon:hover,
+#custom-tray_icon:hover,
 #custom-power:hover,
 #custom-reboot:hover, 
 #custom-sleep:hover, 
 #custom-logout:hover {
     background-color: @hover-pistachio; 
     color: @bg-dark-gray;
+    border-radius: 18px; /* Гарантируем скругление при наведении */
 }
 
-/* Активному окну в Taskbar задаем цвет текста и фона, чтобы оно выделялось */
 #taskbar button.active {
     background-color: @fg-pistachio;
     color: @bg-dark-gray;
 }
 
-/* Предупреждения (садится батарея) */
 #battery.warning, #battery.critical {
     color: @alert-red;
 }
 
-/* Убираем дефолтный фон у скрытых кнопок меню питания */
 #custom-reboot, #custom-sleep, #custom-logout {
     padding: 0 12px;
     margin: 2px;
-    border-radius: 18px;
     background-color: transparent;
     color: @fg-pistachio;
-    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Делаем ящики (выезжающие меню) чуть темнее, чтобы они выделялись */
-.modules-center > widget > box {
-    background-color: @module-bg;
-    border-radius: 20px;
-    margin: 0 4px;
-}
-
-/* --- ИНДИКАТОРЫ ПРИВАТНОСТИ (МИКРОФОН / ЭКРАН) --- */
-#privacy {
-    padding: 0;
-    margin: 0 0 0 4px; /* Небольшой отступ слева от кнопки питания */
+box, widget {
     background-color: transparent;
 }
 
-#privacy-item {
-    padding: 0 6px;
-    margin: 2px;
-    border-radius: 18px;
-    background-color: @module-bg;
-    transition: all 0.2s ease;
+#tray {
+    padding: 0 10px;
 }
 
-/* Зеленый цвет для работающего микрофона */
-#privacy-item.audio-in {
-    color: @hover-pistachio;
-}
-
-/* Оранжевый цвет для записи экрана */
-#privacy-item.screenshare {
-    color: @record-orange;
+#privacy {
+    padding: 0 8px;
+    color: @fg-pistachio;
 }

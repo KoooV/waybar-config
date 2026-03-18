@@ -7,116 +7,110 @@
 
     "modules-center": [
         "group/taskbar_drawer", 
+        "group/tray_drawer",    
         "group/hardware",       
+        "group/battery_drawer", 
         "clock",                
         "custom/settings",      
-        "group/power",
+        "group/power",          
         "privacy"               
     ],
 
-    // --- ЛЕВАЯ ЧАСТЬ ---
     "group/taskbar_drawer": {
+        "orientation": "horizontal",
+        "drawer": { "transition-duration": 300, "transition-left-to-right": true },
+        "modules": ["custom/apps_icon", "wlr/taskbar"]
+    },
+    "custom/apps_icon": { "format": "󰣆" },
+    "wlr/taskbar": { "format": "{icon}", "icon-size": 18, "on-click": "activate" },
+
+    "group/tray_drawer": {
+        "orientation": "horizontal",
+        "drawer": { "transition-duration": 300, "transition-left-to-right": true },
+        "modules": ["custom/tray_icon", "tray"]
+    },
+    "custom/tray_icon": { "format": "󱊖" },
+    "tray": { "icon-size": 18, "spacing": 10 },
+
+    "group/hardware": {
+        "orientation": "horizontal",
+        "modules": ["cpu", "memory", "temperature"]
+    },
+    "cpu": { "format": " {usage}%" },
+    "memory": { "format": " {}%" },
+    "temperature": { "format": " {temperatureC}°C" },
+
+    // --- БАТАРЕЯ И РЕЖИМЫ ПИТАНИЯ ---
+    "group/battery_drawer": {
         "orientation": "horizontal",
         "drawer": {
             "transition-duration": 300,
-            "transition-left-to-right": true
+            "transition-left-to-right": false,
+            "click-to-reveal": true 
         },
         "modules": [
-            "custom/apps_icon", 
-            "wlr/taskbar"       
+            "battery", 
+            "custom/pp-perf",
+            "custom/pp-balanced",
+            "custom/pp-saver"
         ]
     },
-    "custom/apps_icon": {
-        "format": "󰣆", 
-        "tooltip-format": "Открытые программы"
-    },
-    "wlr/taskbar": {
-        "format": "{icon}",
-        "icon-size": 18,
-        "on-click": "activate",
-        "on-click-middle": "close",
-        "ignore-list": ["waybar"],
-        "tooltip-format": "{title}"
-    },
-    "group/hardware": {
-        "orientation": "horizontal",
-        "modules": ["cpu", "memory", "temperature", "battery"]
-    },
-    "cpu": { "format": " {usage}%", "tooltip": false },
-    "memory": { "format": " {}%", "tooltip": false },
-    "temperature": { "format": " {temperatureC}°C", "tooltip": false },
     "battery": {
         "format": "{icon} {capacity}%",
         "format-charging": "󰂄 {capacity}%",
         "format-plugged": " {capacity}%",
-        "format-icons": ["", "", "", "", ""]
-    },
-
-    // --- ЦЕНТР ---
-    "clock": {
-        "format": "{:%H:%M • %A, %d %B %Y}",
-        "tooltip-format": "<tt><small>{calendar}</small></tt>",
-        "locale": "ru_RU.UTF-8" 
-    },
-
-    // --- ПРАВАЯ ЧАСТЬ ---
-    "custom/settings": {
-        "format": "",
-        "on-click": "swaync-client -t -sw",
+        "format-icons": ["", "", "", "", ""],
         "tooltip": false
     },
 
-    // --- КНОПКА ПИТАНИЯ ---
-    "group/power": {
-        "orientation": "horizontal",
-        "drawer": {
-            "transition-duration": 300,
-            "transition-left-to-right": false 
-        },
-        "modules": [
-            "custom/power",   
-            "custom/reboot",  
-            "custom/sleep",   
-            "custom/logout"   
-        ]
+    // Модули с проверкой текущего режима (интервал 2 сек)
+    "custom/pp-perf": {
+        "format": "󰓅",
+        "exec": "if [ $(powerprofilesctl get) = 'performance' ]; then echo '{\"class\": \"active\"}'; else echo '{\"class\": \"inactive\"}'; fi",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "powerprofilesctl set performance",
+        "tooltip-format": "Режим: Высокая производительность"
     },
-    "custom/power": {
-        "format": "",
-        "on-click": "systemctl poweroff",
-        "tooltip-format": "Выключить ПК"
+    "custom/pp-balanced": {
+        "format": "󰾗",
+        "exec": "if [ $(powerprofilesctl get) = 'balanced' ]; then echo '{\"class\": \"active\"}'; else echo '{\"class\": \"inactive\"}'; fi",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "powerprofilesctl set balanced",
+        "tooltip-format": "Режим: Сбалансированный"
     },
-    "custom/reboot": {
-        "format": "󰜉",
-        "on-click": "systemctl reboot",
-        "tooltip-format": "Перезагрузить"
-    },
-    "custom/sleep": {
-        "format": "󰒲",
-        "on-click": "systemctl suspend",
-        "tooltip-format": "Спящий режим"
-    },
-    "custom/logout": {
-        "format": "󰍃",
-        "on-click": "niri msg action quit", 
-        "tooltip-format": "Выйти из системы"
+    "custom/pp-saver": {
+        "format": "󰾆",
+        "exec": "if [ $(powerprofilesctl get) = 'power-saver' ]; then echo '{\"class\": \"active\"}'; else echo '{\"class\": \"inactive\"}'; fi",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "powerprofilesctl set power-saver",
+        "tooltip-format": "Режим: Экономия энергии"
     },
 
-    // --- ИНДИКАТОРЫ ПРИВАТНОСТИ (МИКРОФОН И ЭКРАН) ---
+    "clock": {
+        "format": "{:%H:%M  |  %A, %d %B %Y}",
+        "locale": "ru_RU.UTF-8"
+    },
+
+    "custom/settings": {
+        "format": "",
+        "on-click": "swaync-client -t -sw"
+    },
+
+    "group/power": {
+        "orientation": "horizontal",
+        "drawer": { "transition-duration": 300, "transition-left-to-right": false },
+        "modules": ["custom/power", "custom/reboot", "custom/sleep", "custom/logout"]
+    },
+    "custom/power": { "format": "", "on-click": "systemctl poweroff" },
+    "custom/reboot": { "format": "󰜉", "on-click": "systemctl reboot" },
+    "custom/sleep": { "format": "󰒲", "on-click": "systemctl suspend" },
+    "custom/logout": { "format": "󰍃", "on-click": "niri msg action quit" },
+
     "privacy": {
-        "icon-spacing": 8,
         "icon-size": 14,
-        "transition-duration": 250,
-        "modules": [
-            {
-                "type": "screenshare",
-                "tooltip": true,
-                "tooltip-icon-size": 24
-            },
-            {
-                "type": "audio-in",
-                "tooltip": true,
-                "tooltip-icon-size": 24
-            }
-        ]
+        "modules": [{ "type": "screenshare", "prefix": "󰒔" }, { "type": "audio-in", "prefix": "󰍬" }]
     }
 }
