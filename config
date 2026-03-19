@@ -38,7 +38,7 @@
     },
     "cpu": { "format": " {usage}%" },
     "memory": { "format": " {}%" },
-    "temperature": { "format": " {temperatureC}°C" },
+    "temperature": { "format": " {temperatureC}°C", "tooltip": false },
 
     // --- БАТАРЕЯ И РЕЖИМЫ ПИТАНИЯ ---
     "group/battery_drawer": {
@@ -70,7 +70,7 @@
         "return-type": "json",
         "interval": 2,
         "on-click": "powerprofilesctl set performance",
-        "tooltip-format": "Режим: Высокая производительность"
+        "tooltip-format": "high-performance"
     },
     "custom/pp-balanced": {
         "format": "󰾗",
@@ -78,7 +78,7 @@
         "return-type": "json",
         "interval": 2,
         "on-click": "powerprofilesctl set balanced",
-        "tooltip-format": "Режим: Сбалансированный"
+        "tooltip-format": "balance"
     },
     "custom/pp-saver": {
         "format": "󰾆",
@@ -86,17 +86,19 @@
         "return-type": "json",
         "interval": 2,
         "on-click": "powerprofilesctl set power-saver",
-        "tooltip-format": "Режим: Экономия энергии"
+        "tooltip-format": "economy"
     },
 
     "clock": {
         "format": "{:%H:%M  |  %A, %d %B %Y}",
-        "locale": "ru_RU.UTF-8"
+        "locale": "ru_RU.UTF-8",
+        "tooltip": false
     },
 
     "custom/settings": {
         "format": "",
-        "on-click": "swaync-client -t -sw"
+        "on-click": "swaync-client -t -sw",
+        "tooltip": false
     },
 
     "group/power": {
@@ -104,10 +106,10 @@
         "drawer": { "transition-duration": 300, "transition-left-to-right": false },
         "modules": ["custom/power", "custom/reboot", "custom/sleep", "custom/logout"]
     },
-    "custom/power": { "format": "", "on-click": "systemctl poweroff" },
-    "custom/reboot": { "format": "󰜉", "on-click": "systemctl reboot" },
-    "custom/sleep": { "format": "󰒲", "on-click": "systemctl suspend" },
-    "custom/logout": { "format": "󰍃", "on-click": "niri msg action quit" },
+    "custom/power": { "format": "", "on-click": "systemctl poweroff", "tooltip-format": "power-off" },
+    "custom/reboot": { "format": "󰜉", "on-click": "systemctl reboot", "tooltip-format": "reboot" },
+    "custom/sleep": { "format": "󰒲", "on-click": "systemctl suspend", "tooltip-format": "sleep" },
+    "custom/logout": { "format": "󰍃", "on-click": "niri msg action quit", "tooltip-format": "logout" },
 
     "privacy": {
         "icon-size": 14,

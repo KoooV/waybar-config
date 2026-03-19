@@ -1,9 +1,12 @@
 /* --- Цветовая палитра --- */
 @define-color bg-dark-gray #111214;
 @define-color fg-pistachio #BBDBA6;
-@define-color hover-pistachio #A5D683;
 @define-color module-bg #1E1E1E;
-@define-color alert-red #FF8A8A;
+
+@define-color ios-red #FF453A;
+@define-color ios-orange #FF9F0A;
+@define-color ios-purple #5E5CE6;
+@define-color ios-green #30D158;
 
 * {
     border: none;
@@ -36,6 +39,10 @@ window#waybar {
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
+
+
+
+
 /* --- ПОДСВЕТКА ТЕКУЩЕГО РЕЖИМА ПИТАНИЯ --- */
 #custom-pp-perf.active, 
 #custom-pp-balanced.active, 
@@ -62,7 +69,7 @@ window#waybar {
 #custom-reboot:hover, 
 #custom-sleep:hover, 
 #custom-logout:hover {
-    background-color: @hover-pistachio; 
+    background-color: @fg-pistachio; 
     color: @bg-dark-gray;
     border-radius: 18px; /* Гарантируем скругление при наведении */
 }
@@ -94,4 +101,58 @@ box, widget {
 #privacy {
     padding: 0 8px;
     color: @fg-pistachio;
+}
+
+/* Кнопка выключения (Красная) */
+
+#custom-power:hover {
+    background-color: @ios-red;
+    color: @bg-dark-gray;
+    border-radius: 18px;
+}
+
+/* Кнопка перезагрузки (Оранжевая) */
+#custom-reboot:hover {
+    background-color: @module-bg;
+    color: @ios-orange;
+    border-radius: 18px;
+}
+
+/* Кнопка спящего режима (Фиолетовая) */
+#custom-sleep:hover {
+    background-color: @module-bg;
+    color: @ios-purple;
+    border-radius: 18px;
+}
+
+/* Кнопка выхода из Niri (Зеленая) */
+#custom-logout:hover {
+    background-color: @module-bg;
+    color: @ios-green;
+    border-radius: 18px;
+}
+
+/* --- Стилизация всплывающих подсказок (Tooltips) --- */
+
+tooltip {
+    /* Полупрозрачный темный фон (в стиле iOS) */
+    background-color: rgba(30, 30, 30, 0.9); 
+    
+    /* Тонкая рамка в цвет твоего фисташкового выделения */
+    border: 1px solid @fg-pistachio; 
+    
+    /* Твой фирменный радиус скругления из меню */
+    border-radius: 18px; 
+    
+    /* Внутренние отступы от краев до текста */
+    padding: 10px 15px; 
+}
+
+tooltip label {
+    /* Цвет текста делаем фисташковым, как и везде */
+    color: @fg-pistachio; 
+    
+    /* Немного уменьшаем шрифт, чтобы подсказка выглядела аккуратно */
+    font-size: 14px; 
+    font-weight: bold;
 }
