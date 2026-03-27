@@ -60,7 +60,8 @@
         "format-charging": "󰂄 {capacity}%",
         "format-plugged": " {capacity}%",
         "format-icons": ["", "", "", "", ""],
-        "tooltip": false
+        "tooltip": true,
+        "tooltip-format": "{timeTo}"
     },
 
     // Модули с проверкой текущего режима (интервал 2 сек)
