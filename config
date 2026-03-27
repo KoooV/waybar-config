@@ -10,7 +10,7 @@
         "group/hardware",                
         "group/battery_drawer", 
         "clock",  
-        "group/audio",
+        "group/audio", 
         "custom/settings",      
         "group/power",          
         "privacy"               
@@ -41,6 +41,40 @@
     "memory": { "format": " {}%" },
     "temperature": { "format": " {temperatureC}°C", "tooltip": false },
 
+    // --- ЗВУК И МИКРОФОН ---
+    "group/audio": {
+        "orientation": "horizontal",
+        "modules": ["pulseaudio", "pulseaudio#microphone"]
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰖁 Muted",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋋",
+            "headset": "󰋋",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "scroll-step": 5,
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "tooltip": true,
+        "tooltip-format": "{desc}" 
+    },
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": "󰍬 {volume}%",
+        "format-source-muted": "󰍭 Muted",
+        "scroll-step": 5,
+        "on-click": "pavucontrol -t 4",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "tooltip": true,
+        "tooltip-format": "{source_desc}"
+    },
+
     // --- БАТАРЕЯ И РЕЖИМЫ ПИТАНИЯ ---
     "group/battery_drawer": {
         "orientation": "horizontal",
@@ -65,7 +99,7 @@
         "tooltip-format": "{timeTo}"
     },
 
-    // Модули с проверкой текущего режима (интервал 2 сек)
+    // Модули с проверкой текущего режима
     "custom/pp-perf": {
         "format": "󰓅",
         "exec": "if [ $(powerprofilesctl get) = 'performance' ]; then echo '{\"class\": \"active\"}'; else echo '{\"class\": \"inactive\"}'; fi",
@@ -97,40 +131,8 @@
         "tooltip": false
     },
 
-    // --- ЗВУК И МИКРОФОН ---
-    "group/audio": {
-        "orientation": "horizontal",
-        "modules": ["pulseaudio", "pulseaudio#microphone"]
-    },
-    "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-muted": "󰖁 Muted",
-        "format-icons": {
-            "headphone": "󰋋",
-            "hands-free": "󰋋",
-            "headset": "󰋋",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["󰕿", "󰖀", "󰕾"]
-        },
-        "scroll-step": 5,
-        "on-click": "pavucontrol",
-        "tooltip": true,
-        "tooltip-format": "{desc}" 
-    },
-    "pulseaudio#microphone": {
-        "format": "{format_source}",
-        "format-source": "󰍬 {volume}%",
-        "format-source-muted": "󰍭 Muted",
-        "scroll-step": 5,
-        "on-click": "pavucontrol -t 4",
-        "tooltip": true,
-        "tooltip-format": "{source_desc}"
-    },
-    
     "custom/settings": {
-        "format": "",
+        "format": "󰴽",
         "on-click": "pkill -x orbit || orbit > /dev/null 2>&1",
         "tooltip": false
     },

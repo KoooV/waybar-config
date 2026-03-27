@@ -90,8 +90,12 @@ window#waybar {
     color: @ios-red;
 }
 
-/* Состояние выключенного звука */
-#pulseaudio.muted, #pulseaudio-microphone.source-muted {
+/* Строгое разделение: Состояние выключенного звука и микрофона */
+window#waybar #pulseaudio.muted {
+    color: @ios-red;
+}
+
+window#waybar #pulseaudio-microphone.source-muted {
     color: @ios-red;
 }
 
