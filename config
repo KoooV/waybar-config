@@ -6,7 +6,6 @@
     "spacing": 6,
 
     "modules-center": [
-        "group/taskbar_drawer", 
         "group/tray_drawer",    
         "group/hardware",       
         "group/battery_drawer", 
@@ -16,21 +15,22 @@
         "privacy"               
     ],
 
-    "group/taskbar_drawer": {
-        "orientation": "horizontal",
-        "drawer": { "transition-duration": 300, "transition-left-to-right": true },
-        "modules": ["custom/apps_icon", "wlr/taskbar"]
-    },
-    "custom/apps_icon": { "format": "󰣆" },
-    "wlr/taskbar": { "format": "{icon}", "icon-size": 18, "on-click": "activate" },
-
     "group/tray_drawer": {
         "orientation": "horizontal",
-        "drawer": { "transition-duration": 300, "transition-left-to-right": true },
+        "drawer": { 
+        	"transition-duration": 300,
+        	"transition-left-to-right": true },
         "modules": ["custom/tray_icon", "tray"]
     },
-    "custom/tray_icon": { "format": "󱊖" },
-    "tray": { "icon-size": 18, "spacing": 10 },
+    "custom/tray_icon": { 
+    	"format": "󱊖",
+    	"tooltip": false
+    	},
+    "tray": { 
+    	"icon-size": 18, 
+    	"spacing": 10,
+    	"tooltip": false
+    },
 
     "group/hardware": {
         "orientation": "horizontal",

@@ -26,22 +26,18 @@ window#waybar {
     padding: 2px 4px;
 }
 
-/* Общий стиль всех кнопок */
+/* Общий стиль всех активных модулей */
 #clock, #cpu, #temperature, #memory, #battery, #tray,
-#custom-settings, #custom-power, #taskbar button, 
-#custom-apps_icon, #custom-tray_icon,
+#custom-settings, #custom-power, 
+#custom-tray_icon,
 #custom-pp-perf, #custom-pp-balanced, #custom-pp-saver {
     padding: 0 12px;
     margin: 4px 2px;
-    border-radius: 18px; /* Скругление выделения */
+    border-radius: 18px; 
     background-color: @module-bg;
     color: @fg-pistachio;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
-
-
-
-
 
 /* --- ПОДСВЕТКА ТЕКУЩЕГО РЕЖИМА ПИТАНИЯ --- */
 #custom-pp-perf.active, 
@@ -62,8 +58,6 @@ window#waybar {
 #custom-pp-saver:hover,
 #battery:hover,
 #custom-settings:hover, 
-#taskbar button:hover, 
-#custom-apps_icon:hover,
 #custom-tray_icon:hover,
 #custom-power:hover,
 #custom-reboot:hover, 
@@ -71,16 +65,12 @@ window#waybar {
 #custom-logout:hover {
     background-color: @fg-pistachio; 
     color: @bg-dark-gray;
-    border-radius: 18px; /* Гарантируем скругление при наведении */
+    border-radius: 18px;
 }
 
-#taskbar button.active {
-    background-color: @fg-pistachio;
-    color: @bg-dark-gray;
-}
-
+/* Состояние батареи (используем существующий ios-red) */
 #battery.warning, #battery.critical {
-    color: @alert-red;
+    color: @ios-red;
 }
 
 #custom-reboot, #custom-sleep, #custom-logout {
@@ -103,56 +93,39 @@ box, widget {
     color: @fg-pistachio;
 }
 
-/* Кнопка выключения (Красная) */
+/* --- ЦВЕТНЫЕ АКЦЕНТЫ ПРИ НАВЕДЕНИИ (Power Menu) --- */
 
 #custom-power:hover {
     background-color: @module-bg;
     color: @ios-red;
-    border-radius: 18px;
 }
 
-/* Кнопка перезагрузки (Оранжевая) */
 #custom-reboot:hover {
     background-color: @module-bg;
     color: @ios-orange;
-    border-radius: 18px;
 }
 
-/* Кнопка спящего режима (Фиолетовая) */
 #custom-sleep:hover {
     background-color: @module-bg;
     color: @ios-purple;
-    border-radius: 18px;
 }
 
-/* Кнопка выхода из Niri (Зеленая) */
 #custom-logout:hover {
     background-color: @module-bg;
     color: @ios-green;
-    border-radius: 18px;
 }
 
 /* --- Стилизация всплывающих подсказок (Tooltips) --- */
 
 tooltip {
-    /* Полупрозрачный темный фон (в стиле iOS) */
     background-color: rgba(30, 30, 30, 0.9); 
-    
-    /* Тонкая рамка в цвет твоего фисташкового выделения */
     border: 1px solid @fg-pistachio; 
-    
-    /* Твой фирменный радиус скругления из меню */
     border-radius: 18px; 
-    
-    /* Внутренние отступы от краев до текста */
     padding: 10px 15px; 
 }
 
 tooltip label {
-    /* Цвет текста делаем фисташковым, как и везде */
     color: @fg-pistachio; 
-    
-    /* Немного уменьшаем шрифт, чтобы подсказка выглядела аккуратно */
     font-size: 14px; 
     font-weight: bold;
 }
