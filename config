@@ -97,7 +97,7 @@
 
     "custom/settings": {
         "format": "",
-        "on-click": "swaync-client -t -sw",
+        "on-click": "pkill -x orbit || orbit > /dev/null 2>&1",
         "tooltip": false
     },
 
@@ -106,10 +106,10 @@
         "drawer": { "transition-duration": 300, "transition-left-to-right": false },
         "modules": ["custom/power", "custom/reboot", "custom/sleep", "custom/logout"]
     },
-    "custom/power": { "format": "", "on-click": "systemctl poweroff", "tooltip-format": "power-off" },
-    "custom/reboot": { "format": "󰜉", "on-click": "systemctl reboot", "tooltip-format": "reboot" },
-    "custom/sleep": { "format": "󰒲", "on-click": "systemctl suspend", "tooltip-format": "sleep" },
-    "custom/logout": { "format": "󰍃", "on-click": "niri msg action quit", "tooltip-format": "logout" },
+    "custom/power": { "format": "", "on-click": "systemctl poweroff", "tooltip": false },
+    "custom/reboot": { "format": "󰜉", "on-click": "systemctl reboot", "tooltip": false },
+    "custom/sleep": { "format": "󰒲", "on-click": "systemctl suspend", "tooltip": false },
+    "custom/logout": { "format": "󰍃", "on-click": "niri msg action quit", "tooltip": false },
 
     "privacy": {
         "icon-size": 14,

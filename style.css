@@ -106,8 +106,8 @@ box, widget {
 /* Кнопка выключения (Красная) */
 
 #custom-power:hover {
-    background-color: @ios-red;
-    color: @bg-dark-gray;
+    background-color: @module-bg;
+    color: @ios-red;
     border-radius: 18px;
 }
 
