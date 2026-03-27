@@ -7,9 +7,10 @@
 
     "modules-center": [
         "group/tray_drawer",    
-        "group/hardware",       
+        "group/hardware",                
         "group/battery_drawer", 
-        "clock",                
+        "clock",  
+        "group/audio",
         "custom/settings",      
         "group/power",          
         "privacy"               
@@ -25,7 +26,7 @@
     "custom/tray_icon": { 
     	"format": "󱊖",
     	"tooltip": false
-    	},
+    },
     "tray": { 
     	"icon-size": 18, 
     	"spacing": 10,
@@ -96,6 +97,38 @@
         "tooltip": false
     },
 
+    // --- ЗВУК И МИКРОФОН ---
+    "group/audio": {
+        "orientation": "horizontal",
+        "modules": ["pulseaudio", "pulseaudio#microphone"]
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰖁 Muted",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋋",
+            "headset": "󰋋",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "scroll-step": 5,
+        "on-click": "pavucontrol",
+        "tooltip": true,
+        "tooltip-format": "{desc}" 
+    },
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": "󰍬 {volume}%",
+        "format-source-muted": "󰍭 Muted",
+        "scroll-step": 5,
+        "on-click": "pavucontrol -t 4",
+        "tooltip": true,
+        "tooltip-format": "{source_desc}"
+    },
+    
     "custom/settings": {
         "format": "",
         "on-click": "pkill -x orbit || orbit > /dev/null 2>&1",
@@ -114,6 +147,6 @@
 
     "privacy": {
         "icon-size": 14,
-        "modules": [{ "type": "screenshare", "prefix": "󰒔" }, { "type": "audio-in", "prefix": "󰍬" }]
+        "modules": [{ "type": "screenshare", "prefix": "󰒔" }]
     }
 }

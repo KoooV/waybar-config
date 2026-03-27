@@ -26,7 +26,7 @@ window#waybar {
     padding: 2px 4px;
 }
 
-/* --- ОБЩИЕ МОДУЛИ (без vitals) --- */
+/* --- ОБЩИЕ МОДУЛИ --- */
 #clock, #battery, #tray,
 #custom-settings, #custom-power, 
 #custom-tray_icon,
@@ -39,15 +39,17 @@ window#waybar {
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-/* --- ЕДИНАЯ ПОДЛОЖКА ДЛЯ ВИТАЛОВ (CPU, RAM, Temp) --- */
-#hardware {
+/* --- ПОДЛОЖКА ДЛЯ ВИТАЛОВ И АУДИО --- */
+#hardware, #audio {
     background-color: @module-bg;
     border-radius: 18px;
     margin: 4px 2px;
     padding: 0 6px;
 }
 
-#cpu, #memory, #temperature {
+/* Элементы внутри подложек */
+#cpu, #memory, #temperature,
+#pulseaudio, #pulseaudio-microphone {
     background-color: transparent;
     color: @fg-pistachio;
     margin: 0;
@@ -62,7 +64,7 @@ window#waybar {
     color: @bg-dark-gray;
 }
 
-/* Стили для неактивных иконок в ящике (без фона, пока не наведешь) */
+/* Стили для неактивных иконок в ящике */
 #custom-pp-perf, #custom-pp-balanced, #custom-pp-saver {
     background-color: transparent;
 }
@@ -83,8 +85,13 @@ window#waybar {
     border-radius: 18px;
 }
 
-/* Состояние батареи (используем существующий ios-red) */
+/* Состояние батареи */
 #battery.warning, #battery.critical {
+    color: @ios-red;
+}
+
+/* Состояние выключенного звука */
+#pulseaudio.muted, #pulseaudio-microphone.source-muted {
     color: @ios-red;
 }
 
@@ -109,29 +116,12 @@ box, widget {
 }
 
 /* --- ЦВЕТНЫЕ АКЦЕНТЫ ПРИ НАВЕДЕНИИ (Power Menu) --- */
-
-#custom-power:hover {
-    background-color: @module-bg;
-    color: @ios-red;
-}
-
-#custom-reboot:hover {
-    background-color: @module-bg;
-    color: @ios-orange;
-}
-
-#custom-sleep:hover {
-    background-color: @module-bg;
-    color: @ios-purple;
-}
-
-#custom-logout:hover {
-    background-color: @module-bg;
-    color: @ios-green;
-}
+#custom-power:hover { background-color: @module-bg; color: @ios-red; }
+#custom-reboot:hover { background-color: @module-bg; color: @ios-orange; }
+#custom-sleep:hover { background-color: @module-bg; color: @ios-purple; }
+#custom-logout:hover { background-color: @module-bg; color: @ios-green; }
 
 /* --- Стилизация всплывающих подсказок (Tooltips) --- */
-
 tooltip {
     background-color: rgba(30, 30, 30, 0.9); 
     border: 1px solid @fg-pistachio; 
