@@ -26,8 +26,8 @@ window#waybar {
     padding: 2px 4px;
 }
 
-/* Общий стиль всех активных модулей */
-#clock, #cpu, #temperature, #memory, #battery, #tray,
+/* --- ОБЩИЕ МОДУЛИ (без vitals) --- */
+#clock, #battery, #tray,
 #custom-settings, #custom-power, 
 #custom-tray_icon,
 #custom-pp-perf, #custom-pp-balanced, #custom-pp-saver {
@@ -37,6 +37,21 @@ window#waybar {
     background-color: @module-bg;
     color: @fg-pistachio;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* --- ЕДИНАЯ ПОДЛОЖКА ДЛЯ ВИТАЛОВ (CPU, RAM, Temp) --- */
+#hardware {
+    background-color: @module-bg;
+    border-radius: 18px;
+    margin: 4px 2px;
+    padding: 0 6px;
+}
+
+#cpu, #memory, #temperature {
+    background-color: transparent;
+    color: @fg-pistachio;
+    margin: 0;
+    padding: 0 6px;
 }
 
 /* --- ПОДСВЕТКА ТЕКУЩЕГО РЕЖИМА ПИТАНИЯ --- */
