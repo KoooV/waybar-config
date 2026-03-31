@@ -10,6 +10,7 @@
         "group/hardware",                
         "group/battery_drawer", 
         "clock",  
+        "group/keyboard",
         "group/audio", 
         "custom/settings",      
         "group/power",          
@@ -38,8 +39,28 @@
         "modules": ["cpu", "memory", "temperature"]
     },
     "cpu": { "format": " {usage}%" },
-    "memory": { "format": " {}%" },
+    "memory": { "format": " {}%" },
     "temperature": { "format": " {temperatureC}°C", "tooltip": false },
+
+    // --- КЛАВИАТУРА И РАСКЛАДКА ---
+    "group/keyboard": {
+        "orientation": "horizontal",
+        "modules": ["keyboard-state", "niri/language"]
+    },
+    "keyboard-state": {
+        "capslock": true,
+        "format": "{icon}",
+        "format-icons": {
+            "locked": "󰘲 ",
+            "unlocked": ""
+        }
+    },
+    "niri/language": {
+        "format": "󰌌 {}",
+        "format-us": "en",
+        "format-en": "en",
+        "format-ru": "ru"
+    },
 
     // --- ЗВУК И МИКРОФОН ---
     "group/audio": {
@@ -143,7 +164,7 @@
         "modules": ["custom/power", "custom/reboot", "custom/sleep", "custom/logout"]
     },
     "custom/power": { "format": "", "on-click": "systemctl poweroff", "tooltip": false },
-    "custom/reboot": { "format": "󰜉", "on-click": "systemctl reboot", "tooltip": false },
+    "custom/reboot": { "format": "󰜉", "on-click": "systemctl reboot", "toggle-click": false, "tooltip": false },
     "custom/sleep": { "format": "󰒲", "on-click": "systemctl suspend", "tooltip": false },
     "custom/logout": { "format": "󰍃", "on-click": "niri msg action quit", "tooltip": false },
 

@@ -39,21 +39,42 @@ window#waybar {
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-/* --- ПОДЛОЖКА ДЛЯ ВИТАЛОВ И АУДИО --- */
-#hardware, #audio {
+/* --- ПОДЛОЖКА ДЛЯ ВИТАЛОВ, АУДИО И КЛАВИАТУРЫ --- */
+#hardware, #audio, #keyboard {
     background-color: @module-bg;
     border-radius: 18px;
     margin: 4px 2px;
     padding: 0 6px;
 }
 
-/* Элементы внутри подложек */
+/* Элементы внутри подложек (убрали отсюда keyboard-state) */
 #cpu, #memory, #temperature,
-#pulseaudio, #pulseaudio-microphone {
+#pulseaudio, #pulseaudio-microphone,
+#language {
     background-color: transparent;
     color: @fg-pistachio;
     margin: 0;
     padding: 0 6px;
+}
+
+/* --- СТИЛИЗАЦИЯ КЛАВИАТУРЫ И CAPS LOCK --- */
+
+/* Схлопываем пустой модуль состояния в 0 пикселей, убирая лишний значок */
+#keyboard-state {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+#keyboard-state label {
+    font-size: 0px; 
+}
+
+/* При активации Caps Lock возвращаем 15px, красим в красный и добавляем отступ */
+window#waybar #keyboard-state label.locked {
+    font-size: 15px; 
+    color: @ios-red;
+    text-shadow: 0px 0px 5px rgba(255, 69, 58, 0.4);
+    padding-right: 4px; 
 }
 
 /* --- ПОДСВЕТКА ТЕКУЩЕГО РЕЖИМА ПИТАНИЯ --- */
@@ -90,14 +111,26 @@ window#waybar {
     color: @ios-red;
 }
 
-/* Строгое разделение: Состояние выключенного звука и микрофона */
-window#waybar #pulseaudio.muted {
+/* =========================================
+   ИЗОЛЯЦИЯ ЗВУКА И МИКРОФОНА
+   ========================================= */
+
+/* Красим динамик в красный при муте динамиков */
+#pulseaudio.muted {
     color: @ios-red;
 }
 
-window#waybar #pulseaudio-microphone.source-muted {
+/* Запрещаем микрофону краситься в красный, если выключены только динамики */
+#pulseaudio-microphone.muted {
+    color: @fg-pistachio; 
+}
+
+/* Красим микрофон в красный ТОЛЬКО при реальном муте микрофона */
+#pulseaudio-microphone.source-muted,
+#pulseaudio-microphone.muted.source-muted {
     color: @ios-red;
 }
+/* ========================================= */
 
 #custom-reboot, #custom-sleep, #custom-logout {
     padding: 0 12px;
